@@ -79,7 +79,7 @@
     document.getElementById("odd").value = urlParams.get("odd") || "";
     document.getElementById("valor").value = urlParams.get("valor") || "";
 
-    // Envia os dados editados de volta ao bot
+    // Envia os dados editados de volta ao bot e fecha o miniapp
     document.getElementById("salvar").addEventListener("click", () => {
       const dadosEditados = {
         id: document.getElementById("id").value,
@@ -89,7 +89,9 @@
         odd: document.getElementById("odd").value,
         valor: document.getElementById("valor").value
       };
+
       Telegram.WebApp.sendData(JSON.stringify(dadosEditados));
+      Telegram.WebApp.close(); // fecha automaticamente o miniapp
     });
   </script>
 
