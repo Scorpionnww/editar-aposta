@@ -41,6 +41,13 @@
     button:hover {
       background: #0077b5;
     }
+    #mensagem {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 16px;
+      color: green;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -67,6 +74,8 @@
 
   <button id="salvar">Salvar alterações</button>
 
+  <div id="mensagem">✅ Dados enviados com sucesso!</div>
+
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
@@ -91,7 +100,15 @@
       };
 
       Telegram.WebApp.sendData(JSON.stringify(dadosEditados));
-      Telegram.WebApp.close(); // fecha automaticamente o miniapp
+
+      // Mostra mensagem de confirmação
+      const msg = document.getElementById("mensagem");
+      msg.style.display = "block";
+
+      // Fecha o miniapp após 1.5 segundos
+      setTimeout(() => {
+        Telegram.WebApp.close();
+      }, 1500);
     });
   </script>
 
