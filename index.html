@@ -4,69 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editar Aposta</title>
-
-  <style><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Editar Aposta</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
-    h2 { color: #333; }
-    label { display: block; margin-top: 10px; }
-    input { width: 100%; padding: 8px; margin-top: 5px; }
-    button { margin-top: 20px; padding: 10px; background: #0088cc; color: white; border: none; cursor: pointer; }
-    button:hover { background: #006699; }
-  </style>
-</head>
-<body>
-  <h2>Editar Aposta</h2>
-
-  <input id="id" type="hidden">
-
-  <label>Evento</label>
-  <input id="evento" type="text">
-
-  <label>Mercado</label>
-  <input id="mercado" type="text">
-
-  <label>Aposta</label>
-  <input id="aposta" type="text">
-
-  <label>Odd</label>
-  <input id="odd" type="text">
-
-  <label>Valor</label>
-  <input id="valor" type="text">
-
-  <button id="salvar">Salvar alterações</button>
-
-  <!-- SDK do Telegram -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById("id").value = urlParams.get("id") || "";
-    document.getElementById("evento").value = urlParams.get("evento") || "";
-    document.getElementById("mercado").value = urlParams.get("mercado") || "";
-    document.getElementById("aposta").value = urlParams.get("aposta") || "";
-    document.getElementById("odd").value = urlParams.get("odd") || "";
-    document.getElementById("valor").value = urlParams.get("valor") || "";
-
-    document.getElementById("salvar").addEventListener("click", () => {
-      const dadosEditados = {
-        id: document.getElementById("id").value,
-        evento: document.getElementById("evento").value,
-        mercado: document.getElementById("mercado").value,
-        aposta: document.getElementById("aposta").value,
-        odd: document.getElementById("odd").value,
-        valor: document.getElementById("valor").value
-      };
-      Telegram.WebApp.sendData(JSON.stringify(dadosEditados));
-    });
-  </script>
-</body>
-</html>
-
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -109,6 +47,9 @@
 
   <h2>Editar Aposta</h2>
 
+  <!-- Campo oculto para ID -->
+  <input id="id" type="hidden">
+
   <label for="evento">Evento</label>
   <input id="evento" type="text">
 
@@ -129,24 +70,26 @@
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
+    // Preenche os campos com dados vindos da URL
     const urlParams = new URLSearchParams(window.location.search);
-
+    document.getElementById("id").value = urlParams.get("id") || "";
     document.getElementById("evento").value = urlParams.get("evento") || "";
     document.getElementById("mercado").value = urlParams.get("mercado") || "";
     document.getElementById("aposta").value = urlParams.get("aposta") || "";
     document.getElementById("odd").value = urlParams.get("odd") || "";
     document.getElementById("valor").value = urlParams.get("valor") || "";
 
+    // Envia os dados editados de volta ao bot
     document.getElementById("salvar").addEventListener("click", () => {
-      const dados = {
+      const dadosEditados = {
+        id: document.getElementById("id").value,
         evento: document.getElementById("evento").value,
         mercado: document.getElementById("mercado").value,
         aposta: document.getElementById("aposta").value,
         odd: document.getElementById("odd").value,
-        valor: document.getElementById("valor").value,
+        valor: document.getElementById("valor").value
       };
-
-      Telegram.WebApp.sendData(JSON.stringify(dados));
+      Telegram.WebApp.sendData(JSON.stringify(dadosEditados));
     });
   </script>
 
