@@ -79,7 +79,6 @@
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    // Preenche os campos com dados vindos da URL
     const urlParams = new URLSearchParams(window.location.search);
     document.getElementById("id").value = urlParams.get("id") || "";
     document.getElementById("evento").value = urlParams.get("evento") || "";
@@ -88,7 +87,6 @@
     document.getElementById("odd").value = urlParams.get("odd") || "";
     document.getElementById("valor").value = urlParams.get("valor") || "";
 
-    // Envia os dados editados de volta ao bot e fecha o miniapp
     document.getElementById("salvar").addEventListener("click", () => {
       const dadosEditados = {
         id: document.getElementById("id").value,
@@ -99,15 +97,20 @@
         valor: document.getElementById("valor").value
       };
 
-      Telegram.WebApp.sendData(JSON.stringify(dadosEditados));
+      if (typeof Telegram !== "undefined" && Telegram.WebApp) {
+        alert("📤 Enviando para o bot:\n" + JSON.stringify(dadosEditados));
+        console.log("📤 Enviando para o bot:", dadosEditados);
+        Telegram.WebApp.sendData(JSON.stringify(dadosEditados));
+      } else {
+        alert("❌ Telegram.WebApp não disponível.\nAbra o miniapp pelo botão dentro do Telegram.");
+        console.log("❌ Telegram.WebApp não disponível.");
+      }
 
-      // Mostra mensagem de confirmação
       const msg = document.getElementById("mensagem");
       msg.style.display = "block";
 
-      // Fecha o miniapp após 1.5 segundos
       setTimeout(() => {
-        Telegram.WebApp.close();
+        if (Telegram.WebApp) Telegram.WebApp.close();
       }, 1500);
     });
   </script>
